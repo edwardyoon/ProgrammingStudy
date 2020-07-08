@@ -18,7 +18,6 @@ public class Test {
       e.printStackTrace();
     }
     return out.toByteArray();
-
   }
 
   public static void deserialize(byte[] bytes, Writable obj) {
