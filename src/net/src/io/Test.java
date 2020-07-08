@@ -1,4 +1,4 @@
-package java.src.io;
+package net.src.io;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

@@ -1,4 +1,4 @@
-package java.src.io;
+package net.src.io;
 
 import java.io.DataInput;
 import java.io.DataOutput;
