@@ -51,4 +51,9 @@ public class ListWritable implements Writable {
       out.writeInt(num);
     }
   }
+
+  @Override
+  public String toString() {
+    return buff.toString();
+  }
 }
