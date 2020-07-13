@@ -40,7 +40,6 @@ public class ListWritable implements Writable {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    System.out.println("read complete: " + buff.toString());
   }
 
   @Override
@@ -50,5 +49,10 @@ public class ListWritable implements Writable {
     for (Integer num : buff) {
       out.writeInt(num);
     }
+  }
+
+  @Override
+  public String toString() {
+    return buff.toString();
   }
 }
