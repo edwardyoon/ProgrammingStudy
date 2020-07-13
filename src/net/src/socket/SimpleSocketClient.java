@@ -28,6 +28,8 @@ public class SimpleSocketClient {
     output = socket.getOutputStream();
     input = socket.getInputStream();
     isReading = true;
+    new Thread(() -> {
+    }).start();
 
     return socket.isConnected();
   }
@@ -45,20 +47,15 @@ public class SimpleSocketClient {
   }
 
   public void receiveMessage() throws IOException {
-
     BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-    String message = null;
-    do {
-      message = reader.readLine();
-      System.out.println("Server: " + message);
-    }
-    while (isReading);
+    String message = reader.readLine();
+    System.out.println("Server: " + message);
   }
 
   public void sendTextMessage(String message) {
     System.out.println("sending Message: " + message);
-    PrintWriter writer = new PrintWriter(output);
-    writer.println(message + "print");
+    PrintWriter writer = new PrintWriter(output, true);
+    writer.println(message);
     writer.flush();
   }
 }

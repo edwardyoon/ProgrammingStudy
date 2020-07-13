@@ -17,39 +17,22 @@ public class Test {
   public static void socketServerTest() throws IOException {
     SimpleSocketServer server = new SimpleSocketServer(8888);
     SimpleSocketClient client = new SimpleSocketClient("localhost", 8888);
-    new Thread(() -> {
-      try {
-        server.start();
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-    }).start();
+
+    /*
+    mode: "text" or "writable"
+     */
+    String serverMode = "writable";
 
     new Thread(() -> {
       try {
-        ListWritable list = new ListWritable();
-        list.add(1);
-        list.add(2);
-        list.add(3);
-
-        if (client.connectToServer()) {
-          for (int i = 0; i < 10; i++) {
-            client.sendByteArray(Utils.serialize(list));
-            try {
-              Thread.sleep(1000);
-            } catch (InterruptedException e) {
-              e.printStackTrace();
-            }
-          }
-          client.disconnect();
-        }
-
+        server.start(serverMode);
       } catch (IOException e) {
         e.printStackTrace();
       }
     }).start();
 
   }
+
 
   public static void serializationTest() {
     ListWritable listWritable = new ListWritable();

@@ -26,7 +26,7 @@ public class SimpleSocketServer {
     this.port = port;
   }
 
-  public void start() throws IOException {
+  public void start(String readingType) throws IOException {
     System.out.println("Server has been started at port:" + port);
     isRunning = true;
     isReading = true;
@@ -35,7 +35,12 @@ public class SimpleSocketServer {
       socket = serverSocket.accept();
       input = socket.getInputStream();
       output = socket.getOutputStream();
-      receiveWritable();
+
+      if(readingType.equals("text")){
+        receiveMessage();
+      } else if(readingType.equals("writable")) {
+        receiveWritable();
+      }
     }
   }
 
@@ -43,14 +48,16 @@ public class SimpleSocketServer {
     DataInput in = new DataInputStream(input);
     Writable listWritable = new ListWritable();
     listWritable.read(in);
-    System.out.println("writable received from Client: " + listWritable.toString());
-    PrintWriter writer = new PrintWriter(output);
-    writer.println("Well received! writable: " + listWritable.toString());
+
+    PrintWriter writer = new PrintWriter(output, true);
+    System.out.println("Client: " + listWritable.toString());
+    writer.println(listWritable.toString());
+    writer.flush();
   }
 
   public void receiveMessage() throws IOException {
     String message = "";
-    PrintWriter writer = new PrintWriter(output);
+    PrintWriter writer = new PrintWriter(output, true);
     BufferedReader reader = new BufferedReader(new InputStreamReader(input));
     do {
       message = reader.readLine();
